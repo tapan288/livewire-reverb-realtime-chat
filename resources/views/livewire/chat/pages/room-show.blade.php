@@ -1,0 +1,3 @@
+<div>
+    {{ $room->slug }}
+</div>
