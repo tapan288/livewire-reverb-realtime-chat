@@ -17,7 +17,7 @@ class Messages extends Component
         $this->fill([
             'messages' => $this->room->messages()
                 ->with('user')
-                ->oldest()
+                ->latest()
                 ->take(100)
                 ->get(),
         ]);
