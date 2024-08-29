@@ -1,6 +1,11 @@
 <div x-data="{
     mobileSidebarOpen: false,
     shift: false,
+    timeout: null,
+    handleTypingFinished() {
+        console.log('Typing finished')
+        clearTimeout(this.timeout)
+    }
 }">
     <!-- Page Container -->
     <div id="page-container" class="relative mx-auto h-screen min-w-[320px] bg-white lg:ms-80">
@@ -140,7 +145,12 @@
             <form class="container mx-auto flex h-20 items-center gap-2 px-4 lg:px-8 xl:max-w-7xl">
                 <textarea wire:model="body" x-on:keydown.shift="shift = true" x-on:keyup.shift="shift = false"
                     x-on:keydown.enter="if(!shift || !$event.target.value){$event.preventDefault();}"
-                    x-on:keyup.enter.prevent="if(!shift && $event.target.value){$wire.submit()} "
+                    x-on:keyup.enter.prevent="if(!shift && $event.target.value){$wire.submit();handleTypingFinished()}"
+                    x-on:keydown="
+                    clearTimeout(timeout)
+                        console.log('Typing...')
+                        timeout = setTimeout(() => handleTypingFinished(),2000)
+                    "
                     class="block w-full rounded-lg border-0 px-5 py-4 leading-6 focus:border-indigo-500 focus:ring focus:ring-indigo-500/75"
                     placeholder="Type a new message and hit enter.."></textarea>
             </form>
