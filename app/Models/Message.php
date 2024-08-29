@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Message extends Model
 {
@@ -19,5 +20,23 @@ class Message extends Model
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function createdAtHuman(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getCreatedAtHumanDate(),
+        );
+    }
+
+    protected function getCreatedAtHumanDate(): string
+    {
+        $day = match (true) {
+            $this->created_at->isToday() => 'Today',
+            $this->created_at->isYesterday() => 'Yesterday',
+            default => $this->created_at->toDateString()
+        };
+
+        return $day . ' at ' . $this->created_at->format('H:i a');
     }
 }

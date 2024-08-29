@@ -25,7 +25,7 @@
             </p>
         </div>
         <p class="text-xs font-medium text-slate-500">
-            {{ $message->created_at->format('H:i a') }}
+            {{ $message->created_at_human }}
         </p>
     </div>
     <!-- END  Messages Received -->
