@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chat\Pages;
 
+use App\Events\MessageCreated;
 use App\Models\Room;
 use App\Models\Message;
 use Livewire\Component;
@@ -27,6 +28,8 @@ class RoomShow extends Component
         $this->reset(['body']);
 
         $this->dispatch('message.created', $message->id);
+
+        broadcast(new MessageCreated($this->room, $message))->toOthers();
     }
 
     public function render()
