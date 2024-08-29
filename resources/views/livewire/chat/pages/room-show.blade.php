@@ -116,7 +116,7 @@
                 <!-- Right Section -->
                 <div class="flex items-center gap-2">
                     <!-- Settings -->
-                    <a href="javascript:void(0)"
+                    <a href="{{ route('dashboard') }}"
                         class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-2.5 py-2 font-semibold leading-6 text-slate-800 shadow-sm hover:border-slate-300 hover:bg-slate-100 hover:text-slate-800 hover:shadow focus:outline-none focus:ring focus:ring-slate-500/25 active:border-white active:bg-white active:shadow-none">
                         <svg class="hi-solid hi-user-circle inline-block h-5 w-5" fill="currentColor"
                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
