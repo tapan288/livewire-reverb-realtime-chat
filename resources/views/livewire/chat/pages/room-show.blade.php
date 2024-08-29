@@ -3,7 +3,10 @@
     shift: false,
     timeout: null,
     handleTypingFinished() {
-        console.log('Typing finished')
+        Echo.private('chat.room.{{ $room->id }}')
+            .whisper('typing-finished', {
+                id: {{ auth()->id() }}
+            })
         clearTimeout(this.timeout)
     }
 }">
@@ -147,8 +150,11 @@
                     x-on:keydown.enter="if(!shift || !$event.target.value){$event.preventDefault();}"
                     x-on:keyup.enter.prevent="if(!shift && $event.target.value){$wire.submit();handleTypingFinished()}"
                     x-on:keydown="
-                    clearTimeout(timeout)
-                        console.log('Typing...')
+                        clearTimeout(timeout)
+                        Echo.private('chat.room.{{ $room->id }}')
+                        .whisper('typing',{
+                            id: {{ auth()->id() }}
+                        })
                         timeout = setTimeout(() => handleTypingFinished(),2000)
                     "
                     class="block w-full rounded-lg border-0 px-5 py-4 leading-6 focus:border-indigo-500 focus:ring focus:ring-indigo-500/75"
